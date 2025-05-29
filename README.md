@@ -51,8 +51,8 @@ AppControlPanel est un panneau de contrôle simple et personnalisable pour lance
     ```
 
 6. **Accédez à vos interfaces :**
-    - Panneau admin : [http://localhost:3000/panel.html](http://localhost:3000/panel.html)
-    - Interface utilisateur : [http://localhost:3000/user.html](http://localhost:3000/user.html)
+    - Panneau admin : [http://localhost:9560/panel.html](http://localhost:9560/panel.html)
+    - Interface utilisateur : [http://localhost:9560/user.html](http://localhost:9560/user.html)
 
 ## ✏️ Modifier ou ajouter des applications
 
