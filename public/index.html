@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lanceur d'applications</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>Liste des applications</header>
+<div class="container">
+  <ul id="app-list" style="list-style:none; padding-left:0;"></ul>
+</div>
+
+<script>
+async function fetchApps() {
+  const res = await fetch('/api/apps');
+  return res.json();
+}
+
+async function launchApp(command) {
+  // Ici tu mets ton code pour lancer la commande côté serveur ou via WebSocket
+  alert(`Lancement de la commande : ${command}`);
+  // Pour l'instant c'est un alert, remplace selon ta logique serveur/client
+}
+
+async function renderApps() {
+  const apps = await fetchApps();
+  const ul = document.getElementById('app-list');
+  ul.innerHTML = '';
+  apps.forEach(app => {
+    const li = document.createElement('li');
+    li.style.marginBottom = '15px';
+    li.innerHTML = `
+      <img src="${app.logo}" alt="${app.name}" width="32" height="32" style="vertical-align:middle; border-radius:6px;" />
+      <strong style="margin-left:10px; cursor:pointer;">${app.name}</strong>
+    `;
+    li.querySelector('strong').addEventListener('click', () => {
+      launchApp(app.command);  // lancement direct, sans confirmation
+    });
+    ul.appendChild(li);
+  });
+}
+
+renderApps();
+</script>
+</body>
+</html>

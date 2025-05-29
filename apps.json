@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Google Chrome",
+    "command": "start chrome",
+    "icon": "https://cdn-icons-png.flaticon.com/512/888/888879.png"
+  },
+  {
+    "name": "Bloc-Notes",
+    "command": "notepad",
+    "icon": "https://cdn-icons-png.flaticon.com/512/906/906175.png"
+  }
+]

@@ -1,0 +1,100 @@
+/* Reset et thème sombre */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #121212;
+  color: #eee;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 10px;
+}
+
+#apps-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 18px;
+  width: 100%;
+  max-width: 800px;
+  padding: 10px;
+  overflow-y: auto;
+  border-radius: 12px;
+  background: #1e1e1e;
+  box-shadow: 0 0 15px rgba(0,0,0,0.8);
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.app-card {
+  background: #2a2a2a;
+  border-radius: 18px;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  user-select: none;
+}
+
+.app-card:hover {
+  transform: scale(1.15);
+  box-shadow: 0 6px 12px #00bcd4;
+}
+
+.app-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 3px #00bcd4);
+  transition: filter 0.3s ease;
+}
+
+.app-card:hover .app-logo {
+  filter: drop-shadow(0 0 6px #00e5ff);
+}
+
+/* Bouton rafraîchir */
+#refresh-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #00bcd4;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  color: #121212;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00bcd4;
+  transition: opacity 0.5s ease;
+  user-select: none;
+  z-index: 10;
+}
+
+/* Animation fade in */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* Scrollbar sombre */
+#apps-container::-webkit-scrollbar {
+  width: 8px;
+}
+#apps-container::-webkit-scrollbar-thumb {
+  background-color: #00bcd4;
+  border-radius: 10px;
+}
+#apps-container::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}

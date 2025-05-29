@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Panneau de gestion</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    :root {
+      --bg: #f2f2f2;
+      --text: #222;
+      --card: #fff;
+      --accent: #007bff;
+    }
+
+    .dark {
+      --bg: #121212;
+      --text: #f2f2f2;
+      --card: #1e1e1e;
+      --accent: #4fc3f7;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--accent);
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .apps-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .app-card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .app-card:hover {
+      transform: scale(1.02);
+    }
+
+    .app-card img {
+      width: 64px;
+      height: 64px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .app-card input {
+      width: 100%;
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .app-card button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      background-color: var(--accent);
+      color: white;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+
+    .app-card .delete {
+      background: crimson;
+    }
+
+    .add-form {
+      margin-bottom: 30px;
+      background: var(--card);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .add-form input {
+      margin-right: 10px;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .add-form button {
+      background: var(--accent);
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()">🎨 Thème</button>
+  <h1>Gestion des Applications</h1>
+
+  <div class="add-form">
+    <input type="text" id="name" placeholder="Nom">
+    <input type="text" id="command" placeholder="Commande">
+    <input type="text" id="icon" placeholder="Lien image (logo)">
+    <button onclick="addApp()">Ajouter</button>
+  </div>
+
+  <div class="apps-container" id="apps-container"></div>
+
+  <script>
+    let isDark = false;
+    const appsContainer = document.getElementById('apps-container');
+
+    function toggleTheme() {
+      isDark = !isDark;
+      document.body.classList.toggle('dark', isDark);
+    }
+
+    async function fetchApps() {
+      try {
+        const res = await fetch('/apps');
+        const apps = await res.json();
+        renderApps(apps);
+      } catch (err) {
+        console.error('Erreur chargement apps', err);
+      }
+    }
+
+    function renderApps(apps) {
+      appsContainer.innerHTML = '';
+      apps.forEach((app, i) => {
+        const card = document.createElement('div');
+        card.className = 'app-card';
+
+        card.innerHTML = `
+          <img src="${app.icon || 'https://via.placeholder.com/64'}" alt="logo">
+          <input value="${app.name}" id="name-${i}">
+          <input value="${app.command}" id="command-${i}">
+          <input value="${app.icon}" id="icon-${i}">
+          <div>
+            <button onclick="updateApp(${i})">Modifier</button>
+            <button class="delete" onclick="deleteApp(${i})">Supprimer</button>
+          </div>
+        `;
+        appsContainer.appendChild(card);
+      });
+    }
+
+    async function addApp() {
+      const name = document.getElementById('name').value;
+      const command = document.getElementById('command').value;
+      const icon = document.getElementById('icon').value;
+
+      const res = await fetch('/apps', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, command, icon })
+      });
+      if (res.ok) fetchApps();
+    }
+
+    async function updateApp(i) {
+      const name = document.getElementById(`name-${i}`).value;
+      const command = document.getElementById(`command-${i}`).value;
+      const icon = document.getElementById(`icon-${i}`).value;
+
+      const res = await fetch(`/apps/${i}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, command, icon })
+      });
+
+      if (res.ok) fetchApps();
+      else alert('Erreur modification');
+    }
+
+    async function deleteApp(i) {
+      const res = await fetch(`/apps/${i}`, { method: 'DELETE' });
+      if (res.ok) fetchApps();
+      else alert('Erreur suppression');
+    }
+
+    fetchApps();
+  </script>
+</body>
+</html>
