@@ -1,74 +1,90 @@
-🚀 Installation (Windows)
-1. 🔧 Prérequis
+# AppControlPanel
 
-    Node.js installé (v16 ou + recommandé)
+AppControlPanel est un panneau de contrôle simple et personnalisable pour lancer facilement vos applications favorites sous Windows via une interface web moderne. Il est destiné à faciliter la gestion et le lancement de logiciels depuis un navigateur, que ce soit pour un usage personnel, familial, ou pour un environnement d’entreprise.
 
-    Git (optionnel pour cloner depuis GitHub)
+## 🚀 Fonctionnalités principales
 
-2. 📁 Crée ton dossier de projet
+- **Interface web responsive** accessible depuis n’importe quel navigateur.
+- **Ajout, modification et suppression d’applications** via une interface d’administration conviviale (`panel.html`).
+- **Lancement direct** des applications installées sur votre système Windows.
+- **Personnalisation** : thèmes variés et icônes personnalisées via URL.
+- **Gestion simplifiée** des applications via un fichier `apps.json` généré automatiquement.
+- **Séparation des interfaces** : une pour l’utilisateur (`user.html`), une pour l’administrateur (`panel.html`).
 
-mkdir AppControlPanel
-cd AppControlPanel
+## 🔧 Prérequis
 
-3. 📄 Crée la structure suivante :
+- Node.js (v16 ou supérieur recommandé)
+- Git (optionnel, pour cloner depuis GitHub)
 
-AppControlPanel/
-├── public/
-│   ├── user.html
-│   ├── panel.html
-│   └── style.css
-├── server.js
-└── apps.json (sera créé automatiquement)
+## ⚡ Installation rapide (Windows)
 
-Tu peux copier-coller les fichiers server.js, panel.html, user.html que je t’ai donnés. Si tu veux, je peux les renvoyer.
-4. 📦 Initialise le projet Node.js
+1. **Créez votre dossier de projet :**
+    ```bash
+    mkdir AppControlPanel
+    cd AppControlPanel
+    ```
 
-npm init -y
+2. **Structure du projet à respecter :**
+    ```
+    AppControlPanel/
+    ├── public/
+    │   ├── user.html
+    │   ├── panel.html
+    │   └── style.css
+    ├── server.js
+    └── apps.json (sera créé automatiquement)
+    ```
 
-5. 📚 Installe les dépendances
+3. **Initialisez le projet Node.js :**
+    ```bash
+    npm init -y
+    ```
 
-npm install express cors body-parser
+4. **Installez les dépendances :**
+    ```bash
+    npm install express cors body-parser
+    ```
 
-6. ▶️ Lance le serveur
+5. **Lancez le serveur :**
+    ```bash
+    node server.js
+    ```
 
-node server.js
+6. **Accédez à vos interfaces :**
+    - Panneau admin : [http://localhost:3000/panel.html](http://localhost:3000/panel.html)
+    - Interface utilisateur : [http://localhost:3000/user.html](http://localhost:3000/user.html)
 
-Ton panneau est dispo sur :
-📍 http://localhost:3000/panel.html — panneau admin
-📍 http://localhost:3000/user.html — interface utilisateur
-✏️ Modifier ou ajouter des apps
+## ✏️ Modifier ou ajouter des applications
 
-    Depuis panel.html, tu peux :
+Depuis `panel.html`, vous pouvez :
+- Ajouter une application (nom, commande, icône)
+- Modifier ou supprimer une application
+- Lancer une application directement
 
-        Ajouter une app (nom + commande + icône)
+⚠️ **Astuce Windows** : Utilisez des commandes telles que :
+- `notepad`
+- `start chrome`
+- `"C:\\Program Files\\MyApp\\app.exe"`
 
-        Modifier ou supprimer
+## 🌈 Personnalisation
 
-        Lancer directement
+- Plusieurs thèmes intégrés
+- Icônes personnalisables par URL
+- Design responsive adapté à tous les écrans
 
-⚠️ Sur Windows, mets des commandes comme :
+## 📤 Déploiement GitHub
 
-notepad
-start chrome
-"C:\\Program Files\\MyApp\\app.exe"
+1. **Initialisez le dépôt :**
+    ```bash
+    git init
+    git add .
+    git commit -m "First commit: AppControlPanel"
+    git branch -M main
+    git remote add origin https://github.com/fufu25yt/AppControlPanel.git
+    git push -u origin main
+    ```
 
-🌈 Personnalisation
+---
 
-    Plusieurs thèmes dans l’interface
-
-    Icônes personnalisées via URL
-
-    Design responsive
-
-📤 Déploiement GitHub
-
-    Crée un dépôt sur GitHub : AppControlPanel
-
-    Pousse tes fichiers :
-
-git init
-git add .
-git commit -m "First commit: AppControlPanel"
-git branch -M main
-git remote add origin https://github.com/fufu25yt/AppControlPanel.git
-git push -u origin main
+**Licence :** MIT  
+**Auteur :** fufu25yt
