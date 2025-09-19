@@ -1,12 +1,47 @@
 [
   {
-    "name": "Google Chrome",
-    "command": "start chrome",
-    "icon": "https://cdn-icons-png.flaticon.com/512/888/888879.png"
+    "name": "discord",
+    "command": "start \"\" \"%LocalAppData%\\Discord\\Update.exe\" --processStart Discord.exe",
+    "icon": "https://cdn-icons-png.flaticon.com/128/5968/5968756.png"
   },
   {
-    "name": "Bloc-Notes",
-    "command": "notepad",
-    "icon": "https://cdn-icons-png.flaticon.com/512/906/906175.png"
+    "name": "firefox",
+    "command": "start firefox",
+    "icon": "https://cdn-icons-png.flaticon.com/128/5968/5968827.png"
+  },
+  {
+    "name": "spotify",
+    "command": "start \"\" \"%AppData%\\Spotify\\Spotify.exe\"",
+    "icon": "https://cdn-icons-png.flaticon.com/128/174/174872.png"
+  },
+  {
+    "name": "OneNote",
+    "command": "start onenote:",
+    "icon": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fa6c2s8f6.rocketcdn.me%2Fwp-content%2Fuploads%2F2019%2F08%2FLogo-OneNote-2019-2000.png&f=1&nofb=1&ipt=4f02433fa053ab6147a2a9f8791484cad5415828990cc5105331450be16ded32"
+  },
+  {
+    "name": "GeforceNow",
+    "command": "\"C:\\Users\\Administrator\\AppData\\Local\\NVIDIA Corporation\\GeForceNOW\\CEF\\GeForceNOW.exe\"",
+    "icon": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmir-s3-cdn-cf.behance.net%2Fproject_modules%2Fmax_1200%2Fa4c1e581950627.5d0f0adec8557.png&f=1&nofb=1&ipt=88b20e44a1d9177b938fb7a63c3777b7b1a9415dd56a61c009b9c25691c73c5f"
+  },
+  {
+    "name": "TLauncher",
+    "command": "start ",
+    "icon": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.sftcdn.net%2Fimages%2Ft_app-icon-m%2Fp%2F1e3e961e-69c6-4059-befc-5e036db98548%2F3930184263%2Ftlauncher-icon.png&f=1&nofb=1&ipt=feaebda809d3ca4bc4de6ad6fed539dd71fcd75f4bdf23cdce733e37ee2dd8c6"
+  },
+  {
+    "name": "Telegram",
+    "command": "start \"\" \"%UserProfile%\\AppData\\Roaming\\Telegram Desktop\\Telegram.exe\"",
+    "icon": "https://cdn-icons-png.flaticon.com/128/5968/5968804.png"
+  },
+  {
+    "name": "youtube",
+    "command": "start https://www.youtube.com",
+    "icon": "https://cdn-icons-png.flaticon.com/128/1384/1384060.png"
+  },
+  {
+    "name": "cmd",
+    "command": "start cmd",
+    "icon": "https://store-images.s-microsoft.com/image/apps.8232.13926773940052066.8978812d-6c65-429b-835d-2cecd178e2d7.7cb2976d-0593-49c3-8ab7-8bce4a09d750?h=115"
   }
 ]
