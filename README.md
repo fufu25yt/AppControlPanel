@@ -1,6 +1,6 @@
 # AppControlPanel
 
-AppControlPanel est un panneau de contrôle simple et personnalisable pour lancer facilement vos applications favorites sous Windows via une interface web moderne. Il est destiné à faciliter la gestion et le lancement de logiciels depuis un navigateur, que ce soit pour un usage personnel, familial, ou pour un environnement d’entreprise.
+AppControlPanel est un panneau de contrôle simple et personnalisable pour lancer facilement vos applications favorites sous Windows via une interface web moderne. Il est destiné à faciliter la gestion de vos applications locales. Fonctionne sur Windows (et Linux/Mac avec adaptations des commandes).
 
 ## 🚀 Fonctionnalités principales
 
@@ -54,6 +54,53 @@ AppControlPanel est un panneau de contrôle simple et personnalisable pour lance
     - Panneau admin : [http://localhost:9560/panel.html](http://localhost:9560/panel.html)
     - Interface utilisateur : [http://localhost:9560/user.html](http://localhost:9560/user.html)
 
+---
+
+## 🐧 Installation et utilisation sous Linux
+
+### 1. Installer Node.js et Git
+
+Pour Ubuntu/Debian :
+```bash
+sudo apt update
+sudo apt install nodejs npm git -y
+```
+Pour Fedora :
+```bash
+sudo dnf install nodejs npm git -y
+```
+
+### 2. Cloner le dépôt et installer les dépendances
+```bash
+git clone https://github.com/fufu25yt/AppControlPanel.git
+cd AppControlPanel
+npm install
+```
+
+### 3. Adapter les commandes des applications
+Dans l’interface d’administration (`panel.html`), les commandes de lancement doivent être compatibles Linux. Exemples :
+- Pour lancer Gedit : `gedit`
+- Pour lancer Firefox : `firefox`
+- Pour un script : `/chemin/vers/ton_script.sh`
+
+> **Astuce** : tu peux lancer n’importe quelle commande shell, y compris avec des paramètres.
+
+### 4. Lancer le serveur
+```bash
+node server.js
+```
+
+### 5. Accéder à l’interface
+- Panneau admin : [http://localhost:9560/panel.html](http://localhost:9560/panel.html)
+- Interface utilisateur : [http://localhost:9560/user.html](http://localhost:9560/user.html)
+
+### 6. Problèmes courants
+- Assure-toi d’avoir les droits d’exécution sur tes scripts (`chmod +x ton_script.sh`).
+- Certaines commandes peuvent nécessiter des chemins absolus.
+- Pour ouvrir des applications graphiques depuis un serveur Node.js, il faut que le serveur soit lancé dans une session graphique (pas en SSH sans X11 forwarding).
+
+---
+
 ## ✏️ Modifier ou ajouter des applications
 
 Depuis `panel.html`, vous pouvez :
@@ -64,7 +111,7 @@ Depuis `panel.html`, vous pouvez :
 ⚠️ **Astuce Windows** : Utilisez des commandes telles que :
 - `notepad`
 - `start chrome`
-- `"C:\\Program Files\\MyApp\\app.exe"`
+- `"C:\Program Files\MyApp\app.exe"`
 
 ## 🌈 Personnalisation
 
