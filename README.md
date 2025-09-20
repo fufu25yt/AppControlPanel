@@ -94,11 +94,6 @@ node server.js
 - Panneau admin : [http://localhost:9560/panel.html](http://localhost:9560/panel.html)
 - Interface utilisateur : [http://localhost:9560/user.html](http://localhost:9560/user.html)
 
-### 6. Problèmes courants
-- Assure-toi d’avoir les droits d’exécution sur tes scripts (`chmod +x ton_script.sh`).
-- Certaines commandes peuvent nécessiter des chemins absolus.
-- Pour ouvrir des applications graphiques depuis un serveur Node.js, il faut que le serveur soit lancé dans une session graphique (pas en SSH sans X11 forwarding).
-
 ---
 
 ## ✏️ Modifier ou ajouter des applications
