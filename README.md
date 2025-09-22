@@ -1,6 +1,6 @@
 # AppControlPanel
 
-<img width="708" height="662" alt="file_00000000c8d061f4ae5f349482cbbee8" src="https://github.com/user-attachments/assets/4802027a-69b6-4d8a-888d-699aa826b85b" />
+<img width="158" height="200" alt="file_00000000c8d061f4ae5f349482cbbee8" src="https://github.com/user-attachments/assets/4802027a-69b6-4d8a-888d-699aa826b85b" />
 
 AppControlPanel est un panneau de contrôle simple et personnalisable pour lancer facilement vos applications favorites sous Windows via une interface web moderne. Il est destiné à faciliter la gestion de vos applications locales. Fonctionne sur Windows (et Linux/Mac avec adaptations des commandes).
 
