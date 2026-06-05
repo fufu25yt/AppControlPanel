@@ -13,6 +13,14 @@ AppControlPanel est un panneau de contrôle simple et personnalisable pour lance
 - **Gestion simplifiée** des applications via un fichier `apps.json` généré automatiquement.
 - **Séparation des interfaces** : une pour l’utilisateur (`user.html`), une pour l’administrateur (`panel.html`).
 
+<img width="854" height="425" alt="image" src="https://github.com/user-attachments/assets/4a9eb165-5bf2-43c5-b1ad-5e9647afc145" />
+
+<img width="688" height="327.5" alt="image" src="https://github.com/user-attachments/assets/34a18805-492b-40e0-91f6-3aceedecd56f" />
+
+<img width="233,5" height="220,5" alt="image" src="https://github.com/user-attachments/assets/203f1418-7363-42d3-b847-9fe1c84dc735" />
+
+
+
 ## 🔧 Prérequis
 
 - Node.js (v16 ou supérieur recommandé)
