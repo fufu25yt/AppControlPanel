@@ -2,146 +2,382 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Panneau de gestion</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      margin: 0;
-      padding: 20px;
-      transition: background 0.3s, color 0.3s;
-    }
-
+    /* =========================================
+       VARIABLES & THÈMES
+       ========================================= */
     :root {
-      --bg: #f2f2f2;
+      /* Mode Clair (Défaut) */
+      --bg: #f5f5f7;
       --text: #222;
       --card: #fff;
+      --card-hover: #fcfcfc;
       --accent: #007bff;
+      --shadow: rgba(0, 0, 0, 0.08);
+      --menu-bg: #fff;
+      --input-bg: #fff;
+      --input-border: #ccc;
     }
 
-    .dark {
+    body.dark {
+      /* Mode Sombre */
       --bg: #121212;
       --text: #f2f2f2;
       --card: #1e1e1e;
+      --card-hover: #2a2a2a;
       --accent: #4fc3f7;
+      --shadow: rgba(0, 0, 0, 0.4);
+      --menu-bg: #1f1f1f;
+      --input-bg: #333;
+      --input-border: #444;
+    }
+
+    body.multicolor {
+      /* Mode Multicouleur (Animé) */
+      --bg: #ee7752;
+      --text: #fff;
+      --card: rgba(255, 255, 255, 0.15);
+      --card-hover: rgba(255, 255, 255, 0.25);
+      --accent: rgba(255, 255, 255, 0.3);
+      --shadow: rgba(0, 0, 0, 0.2);
+      --menu-bg: rgba(0, 0, 0, 0.5);
+      --input-bg: rgba(255, 255, 255, 0.2);
+      --input-border: rgba(255, 255, 255, 0.4);
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      min-height: 100vh;
+    }
+
+    /* Animation du mode Multicolor */
+    body.multicolor {
+      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+      background-size: 400% 400%;
+      animation: gradientAnim 15s ease infinite;
+    }
+
+    @keyframes gradientAnim {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     h1 {
       text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* =========================================
+       MENU DÉROULANT (DROPDOWN)
+       ========================================= */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: center;
       margin-bottom: 30px;
     }
 
-    .theme-toggle {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: var(--accent);
-      border: none;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 8px;
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropbtn, .dropdown-content button {
+      padding: 10px 16px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: var(--card);
+      color: var(--text);
+      font-weight: 600;
       cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      box-shadow: 0 4px 8px var(--shadow);
+    }
+
+    .dropbtn:active {
+      transform: scale(0.95);
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 110%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--menu-bg);
+      min-width: 160px;
+      box-shadow: 0px 8px 16px var(--shadow);
+      border-radius: 12px;
+      padding: 8px;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .dropdown-content.show {
+      display: flex;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -10px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+
+    .dropdown-content button {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .dropdown-content button:hover {
+      background: rgba(128, 128, 128, 0.2);
+    }
+
+    /* =========================================
+       FORMULAIRE & CARTES (BASE)
+       ========================================= */
+    .add-form {
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+      background: var(--card);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px var(--shadow);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      transition: all 0.3s ease;
     }
 
     .apps-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .app-card {
       background: var(--card);
       border-radius: 16px;
       padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease;
+      box-shadow: 0 4px 12px var(--shadow);
+      transition: transform 0.2s ease, background 0.3s;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
     .app-card:hover {
-      transform: scale(1.02);
+      transform: translateY(-5px) scale(1.02);
+      background: var(--card-hover);
     }
 
     .app-card img {
       width: 64px;
       height: 64px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      object-fit: contain;
+    }
+
+    input {
+      padding: 10px;
       border-radius: 8px;
-      margin-bottom: 10px;
+      border: 1px solid var(--input-border);
+      background-color: var(--input-bg);
+      color: var(--text);
+      font-family: inherit;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .add-form input {
+      flex: 1;
+      min-width: 150px;
     }
 
     .app-card input {
-      width: 100%;
+      width: 90%;
       margin: 5px 0;
-      padding: 8px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
     }
 
-    .app-card button {
+    button.action-btn {
       margin-top: 10px;
-      padding: 8px 12px;
+      padding: 10px 15px;
       border: none;
       border-radius: 8px;
       background-color: var(--accent);
       color: white;
+      font-weight: 600;
       cursor: pointer;
-      margin-right: 5px;
+      transition: opacity 0.2s;
+    }
+
+    button.action-btn:hover {
+      opacity: 0.8;
+    }
+
+    .app-card .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
     }
 
     .app-card .delete {
-      background: crimson;
+      background-color: crimson;
     }
 
-    .add-form {
-      margin-bottom: 30px;
-      background: var(--card);
-      padding: 20px;
+    body.multicolor button.action-btn {
+      color: var(--text);
+    }
+
+    /* =========================================
+       MODE LIQUID GLASS
+       ========================================= */
+    body.liquid .app-card,
+    body.liquid .add-form,
+    body.liquid .dropbtn {
+      background: transparent !important;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.4) !important;
+      box-shadow: 
+        0 15px 25px rgba(0, 0, 0, 0.08),
+        inset 0 6px 12px rgba(255, 255, 255, 0.9),
+        inset 0 -4px 8px rgba(0, 0, 0, 0.05),
+        0 0 0 1px rgba(255, 255, 255, 0.5) !important;
+    }
+
+    body.liquid .dropbtn {
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    .add-form input {
-      margin-right: 10px;
-      padding: 8px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+    body.liquid .app-card:hover,
+    body.liquid .dropbtn:hover {
+      background: rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 
+        0 20px 30px rgba(0, 0, 0, 0.12),
+        inset 0 8px 16px rgba(255, 255, 255, 1),
+        inset 0 -4px 8px rgba(0, 0, 0, 0.05),
+        0 0 0 1px rgba(255, 255, 255, 0.7) !important;
     }
 
-    .add-form button {
-      background: var(--accent);
-      color: white;
-      padding: 8px 15px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+    body.dark.liquid .app-card,
+    body.dark.liquid .add-form,
+    body.dark.liquid .dropbtn {
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 
+        0 15px 25px rgba(0, 0, 0, 0.6),
+        inset 0 6px 12px rgba(255, 255, 255, 0.15),
+        inset 0 -4px 8px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+    }
+
+    /* Style des inputs en mode liquid */
+    body.liquid input {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(4px);
+    }
+    body.dark.liquid input {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
   </style>
 </head>
 <body>
-  <button class="theme-toggle" onclick="toggleTheme()">🎨 Thème</button>
+
+  <header>
+    <div class="dropdown">
+      <button onclick="toggleMenu()" class="dropbtn">⚙️ Menu Options</button>
+      <div id="myDropdown" class="dropdown-content">
+        <button onclick="changeTheme('dark')">🌑 Dark</button>
+        <button onclick="changeTheme('light')">🌕 Light</button>
+        <button onclick="changeTheme('multicolor')">🌈 Multicolor</button>
+        <hr style="width: 100%; border: 0; border-top: 1px solid rgba(128,128,128,0.3); margin: 0;">
+        <button id="liquidToggle" onclick="toggleLiquid()">💧 Liquid: OFF</button>
+        <button onclick="fetchApps()">🔄 Refresh</button>
+      </div>
+    </div>
+  </header>
+
   <h1>Gestion des Applications</h1>
 
   <div class="add-form">
     <input type="text" id="name" placeholder="Nom">
     <input type="text" id="command" placeholder="Commande">
     <input type="text" id="icon" placeholder="Lien image (logo)">
-    <button onclick="addApp()">Ajouter</button>
+    <button class="action-btn" onclick="addApp()">Ajouter</button>
   </div>
 
   <div class="apps-container" id="apps-container"></div>
 
   <script>
-    let isDark = false;
-    const appsContainer = document.getElementById('apps-container');
-
-    function toggleTheme() {
-      isDark = !isDark;
-      document.body.classList.toggle('dark', isDark);
+    // --- GESTION DU MENU DÉROULANT ---
+    function toggleMenu() {
+      document.getElementById("myDropdown").classList.toggle("show");
     }
+
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+          let openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+
+    // --- GESTION DU THÈME DE BASE ---
+    const savedTheme = localStorage.getItem('admin_theme') || 'light';
+    if (savedTheme !== 'light') {
+      document.body.classList.add(savedTheme);
+    }
+
+    function changeTheme(theme) {
+      document.body.classList.remove('dark', 'multicolor');
+      if (theme !== 'light') {
+        document.body.classList.add(theme);
+      }
+      localStorage.setItem('admin_theme', theme);
+    }
+
+    // --- GESTION DU TOGGLE LIQUID GLASS ---
+    const isLiquidSaved = localStorage.getItem('admin_liquidMode') === 'true';
+    const liquidToggleBtn = document.getElementById('liquidToggle');
+
+    if (isLiquidSaved) {
+      document.body.classList.add('liquid');
+      liquidToggleBtn.innerText = '💧 Liquid: ON';
+    }
+
+    function toggleLiquid() {
+      const isActive = document.body.classList.toggle('liquid');
+      localStorage.setItem('admin_liquidMode', isActive);
+      liquidToggleBtn.innerText = isActive ? '💧 Liquid: ON' : '💧 Liquid: OFF';
+    }
+
+    // --- LOGIQUE API ORIGINALE ---
+    const appsContainer = document.getElementById('apps-container');
 
     async function fetchApps() {
       try {
@@ -161,12 +397,12 @@
 
         card.innerHTML = `
           <img src="${app.icon || 'https://via.placeholder.com/64'}" alt="logo">
-          <input value="${app.name}" id="name-${i}">
-          <input value="${app.command}" id="command-${i}">
-          <input value="${app.icon}" id="icon-${i}">
-          <div>
-            <button onclick="updateApp(${i})">Modifier</button>
-            <button class="delete" onclick="deleteApp(${i})">Supprimer</button>
+          <input value="${app.name}" id="name-${i}" placeholder="Nom">
+          <input value="${app.command}" id="command-${i}" placeholder="Commande">
+          <input value="${app.icon}" id="icon-${i}" placeholder="Lien image">
+          <div class="btn-group">
+            <button class="action-btn" onclick="updateApp(${i})">Modifier</button>
+            <button class="action-btn delete" onclick="deleteApp(${i})">Supprimer</button>
           </div>
         `;
         appsContainer.appendChild(card);
@@ -178,12 +414,22 @@
       const command = document.getElementById('command').value;
       const icon = document.getElementById('icon').value;
 
-      const res = await fetch('/apps', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, command, icon })
-      });
-      if (res.ok) fetchApps();
+      try {
+        const res = await fetch('/apps', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, command, icon })
+        });
+        if (res.ok) {
+          fetchApps();
+          // Vider les champs après ajout
+          document.getElementById('name').value = '';
+          document.getElementById('command').value = '';
+          document.getElementById('icon').value = '';
+        }
+      } catch (err) {
+        console.error('Erreur ajout', err);
+      }
     }
 
     async function updateApp(i) {
@@ -191,22 +437,30 @@
       const command = document.getElementById(`command-${i}`).value;
       const icon = document.getElementById(`icon-${i}`).value;
 
-      const res = await fetch(`/apps/${i}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, command, icon })
-      });
-
-      if (res.ok) fetchApps();
-      else alert('Erreur modification');
+      try {
+        const res = await fetch(`/apps/${i}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, command, icon })
+        });
+        if (res.ok) fetchApps();
+        else alert('Erreur modification');
+      } catch (err) {
+        console.error('Erreur modif', err);
+      }
     }
 
     async function deleteApp(i) {
-      const res = await fetch(`/apps/${i}`, { method: 'DELETE' });
-      if (res.ok) fetchApps();
-      else alert('Erreur suppression');
+      try {
+        const res = await fetch(`/apps/${i}`, { method: 'DELETE' });
+        if (res.ok) fetchApps();
+        else alert('Erreur suppression');
+      } catch (err) {
+        console.error('Erreur suppr', err);
+      }
     }
 
+    // Chargement initial
     fetchApps();
   </script>
 </body>
