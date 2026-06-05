@@ -7,39 +7,157 @@
   <title>Mes Applications</title>
   <style>
     :root {
+      /* Mode Sombre (Défaut) */
       --bg: #111;
       --fg: #fff;
       --card: #1f1f1f;
+      --card-hover: #2a2a2a;
+      --shadow: rgba(0, 0, 0, 0.4);
+      --btn-bg: #444;
+      --btn-hover: #555;
+      --menu-bg: #1f1f1f;
     }
 
     body.light {
-      --bg: #f0f0f0;
+      /* Mode Clair */
+      --bg: #f5f5f7;
       --fg: #222;
       --card: #fff;
+      --card-hover: #fcfcfc;
+      --shadow: rgba(0, 0, 0, 0.08);
+      --btn-bg: #ddd;
+      --btn-hover: #ccc;
+      --menu-bg: #fff;
+    }
+
+    body.multicolor {
+      /* Mode Multicouleur (Animé) */
+      --bg: #ee7752; /* Fallback */
+      --fg: #fff;
+      --card: rgba(255, 255, 255, 0.15);
+      --card-hover: rgba(255, 255, 255, 0.25);
+      --shadow: rgba(0, 0, 0, 0.2);
+      --btn-bg: rgba(255, 255, 255, 0.2);
+      --btn-hover: rgba(255, 255, 255, 0.3);
+      --menu-bg: rgba(0, 0, 0, 0.5); /* Plus sombre pour lire le menu sur les couleurs */
     }
 
     body {
       background-color: var(--bg);
       color: var(--fg);
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', system-ui, sans-serif;
       margin: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: background 0.3s, color 0.3s;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      min-height: 100vh;
+    }
+
+    /* Animation pour le mode Multicolor */
+    body.multicolor {
+      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+      background-size: 400% 400%;
+      animation: gradientAnim 15s ease infinite;
+    }
+
+    @keyframes gradientAnim {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     h1 {
       margin-top: 20px;
       font-size: 2rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
 
+    /* =========================================
+       MENU DÉROULANT (DROPDOWN)
+       ========================================= */
+    header {
+      margin: 20px 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    button {
+      padding: 10px 16px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background: var(--btn-hover);
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    /* Le contenu du menu caché par défaut */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 110%; /* Juste en dessous du bouton */
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--menu-bg);
+      min-width: 160px;
+      box-shadow: 0px 8px 16px var(--shadow);
+      border-radius: 12px;
+      padding: 8px;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Classe pour afficher le menu */
+    .dropdown-content.show {
+      display: flex;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -10px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+
+    .dropdown-content button {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+    }
+
+    .dropdown-content button:hover {
+      background: rgba(128, 128, 128, 0.2);
+    }
+
+    /* =========================================
+       GRILLE D'APPLICATIONS
+       ========================================= */
     .app-list {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
       padding: 20px;
+      max-width: 800px;
     }
 
     .app-card {
@@ -47,63 +165,152 @@
       height: 140px;
       border-radius: 20px;
       background-color: var(--card);
+      border: 1px solid transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: transform 0.2s ease, background 0.3s ease;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 16px var(--shadow);
     }
 
     .app-card:hover {
-      transform: scale(1.05);
-      background-color: #333;
+      transform: translateY(-5px) scale(1.02);
+      background-color: var(--card-hover);
+      box-shadow: 0 12px 24px var(--shadow);
+    }
+
+    .app-card:active {
+      transform: scale(0.98);
     }
 
     .app-card img {
-      width: 50px;
-      height: 50px;
-      margin-bottom: 10px;
+      width: 55px;
+      height: 55px;
+      margin-bottom: 12px;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .app-card:hover img {
+      transform: scale(1.1);
     }
 
     .app-card span {
       text-align: center;
-      font-size: 1rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0 10px;
+      word-break: break-word;
     }
 
-    .top-bar {
-      display: flex;
-      gap: 10px;
-      margin: 10px 0;
+    /* =========================================
+       MODE LIQUID GLASS
+       ========================================= */
+    body.liquid .app-card,
+    body.liquid .dropdown > button {
+      background: transparent !important;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 35px;
+      border: 1px solid rgba(255, 255, 255, 0.4) !important;
+      box-shadow: 
+        0 15px 25px rgba(0, 0, 0, 0.08),
+        inset 0 6px 12px rgba(255, 255, 255, 0.9),
+        inset 0 -4px 8px rgba(0, 0, 0, 0.05),
+        0 0 0 1px rgba(255, 255, 255, 0.5) !important;
     }
 
-    .top-bar button {
-      padding: 10px 15px;
-      border: none;
-      border-radius: 10px;
-      background: #444;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s;
+    body.liquid .dropdown > button {
+      border-radius: 20px; 
     }
 
-    .top-bar button:hover {
-      background: #666;
+    body.liquid .app-card:hover,
+    body.liquid .dropdown > button:hover {
+      background: rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 
+        0 20px 30px rgba(0, 0, 0, 0.12),
+        inset 0 8px 16px rgba(255, 255, 255, 1),
+        inset 0 -4px 8px rgba(0, 0, 0, 0.05),
+        0 0 0 1px rgba(255, 255, 255, 0.7) !important;
+    }
+
+    /* Adaptation Liquid pour le mode sombre */
+    body.dark.liquid .app-card,
+    body.dark.liquid .dropdown > button {
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 
+        0 15px 25px rgba(0, 0, 0, 0.6),
+        inset 0 6px 12px rgba(255, 255, 255, 0.15),
+        inset 0 -4px 8px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.05) !important;
     }
   </style>
 </head>
-<body class="dark">
-  <div class="top-bar">
-    <button onclick="changeTheme('dark')">🌑 Dark</button>
-    <button onclick="changeTheme('light')">🌕 Light</button>
-    <button onclick="loadApps()">🔄 Refresh</button>
-  </div>
+<body>
 
-  <div id="appList" class="app-list"></div>
+  <header>
+    <div class="dropdown">
+      <button onclick="toggleMenu()" class="dropbtn">⚙️ Menu Options</button>
+      <div id="myDropdown" class="dropdown-content">
+        <button onclick="changeTheme('dark')">🌑 Dark</button>
+        <button onclick="changeTheme('light')">🌕 Light</button>
+        <button onclick="changeTheme('multicolor')">🌈 Multicolor</button>
+        <hr style="width: 100%; border: 0; border-top: 1px solid rgba(128,128,128,0.3); margin: 0;">
+        <button id="liquidToggle" onclick="toggleLiquid()">💧 Liquid: OFF</button>
+        <button onclick="loadApps()">🔄 Refresh</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="appList" class="app-list"></main>
 
   <script>
+    // --- GESTION DU MENU DÉROULANT ---
+    function toggleMenu() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Fermer le menu si on clique en dehors
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+          let openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+
+    // --- GESTION DU THÈME DE BASE ---
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.body.classList.add(savedTheme);
+
+    function changeTheme(theme) {
+      document.body.classList.remove('dark', 'light', 'multicolor');
+      document.body.classList.add(theme);
+      localStorage.setItem('theme', theme);
+    }
+
+    // --- GESTION DU TOGGLE LIQUID GLASS ---
+    const isLiquidSaved = localStorage.getItem('liquidMode') === 'true';
+    const liquidToggleBtn = document.getElementById('liquidToggle');
+
+    if (isLiquidSaved) {
+      document.body.classList.add('liquid');
+      liquidToggleBtn.innerText = '💧 Liquid: ON';
+    }
+
+    function toggleLiquid() {
+      const isActive = document.body.classList.toggle('liquid');
+      localStorage.setItem('liquidMode', isActive);
+      liquidToggleBtn.innerText = isActive ? '💧 Liquid: ON' : '💧 Liquid: OFF';
+    }
+
+    // --- CHARGEMENT DES APPLICATIONS ---
     async function loadApps() {
       try {
         const res = await fetch('/apps');
@@ -114,15 +321,24 @@
         apps.forEach(app => {
           const div = document.createElement('div');
           div.className = 'app-card';
+          div.setAttribute('role', 'button');
+          div.setAttribute('tabindex', '0'); 
+          
           div.innerHTML = `
-            <img src="${app.icon || 'https://cdn-icons-png.flaticon.com/512/2919/2919600.png'}" alt="">
+            <img src="${app.icon || 'https://cdn-icons-png.flaticon.com/512/2919/2919600.png'}" alt="Icône de ${app.name}">
             <span>${app.name}</span>
           `;
+          
           div.onclick = () => launchApp(app.command);
+          
+          div.onkeydown = (e) => {
+            if (e.key === 'Enter') launchApp(app.command);
+          };
+
           appList.appendChild(div);
         });
       } catch (err) {
-        console.error('Erreur chargement apps', err);
+        console.error('Erreur lors du chargement des apps:', err);
       }
     }
 
@@ -133,14 +349,9 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ command })
         });
-        // Pas de popup
       } catch (err) {
-        console.error('Erreur lancement', err);
+        console.error('Erreur lors du lancement:', err);
       }
-    }
-
-    function changeTheme(theme) {
-      document.body.className = theme;
     }
 
     loadApps();
